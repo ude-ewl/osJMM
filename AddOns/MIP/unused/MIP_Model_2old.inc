@@ -1,0 +1,14 @@
+*QUC21
+QUC22
+QUC23
+*QUC24
+QUC25
+QUC26
+QGSTARTFUEL
+QESTOLOAD1
+QESTOLOAD2
+$ifi %UnitCramp%==yes QUC18
+$ifi %UnitCramp%==yes QUC20
+QUCELECSTO4
+$ifi %UnitCscc%==yes  QUC12
+
