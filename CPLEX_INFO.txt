@@ -1,0 +1,114 @@
+* #######################################################################################
+* GENERAL-NOTES
+* #######################################################################################
+
+* - default values are recommended by GAMS 
+* - default values are updated if necessary due to changes in solver algorithms
+* - in case of GAMS/CPLEX updates (major releases) none-default settings should be checked 
+* - in case of problems one might use "writesav" (Writes a binary problem file.) to get further
+*   help from GAMS support without revealing any source code (out put routines should be commented out)
+
+* #######################################################################################
+* CPLEX-SETTINGS - ADDITIONAL INFORMATION
+* (basic information --> https://gams.com/latest/docs/solvers/cplex/index.html)
+* #######################################################################################
+
+* epgap 
+* ------------------------------------
+* Does not need to be specified for LPs.
+* ------------------------------------
+
+* eprhs 
+* ------------------------------------
+* values lower than 1.0e-5 are not recommended by GAMS
+* ------------------------------------
+
+* iatriggertime
+* ------------------------------------
+* defines min-run-time
+* ------------------------------------
+
+
+* iterlim
+* ------------------------------------
+* default value = 2.000.0000
+* usually should not be exceeded
+* ------------------------------------
+
+* lpmethod
+* ------------------------------------
+* presolve is usually performed for the dual problem (--> solve with dual simplex)
+* presolve of the primal problem should speed up barrier
+* --> in case one wants to test the benefits of the barrier algorithm "lpmethod" should be set to "4" 
+*      instead of only increasing "threads"
+* in addition one might want to turn off crossover to further speed up barrier algorithm --> see solutiontype
+* ------------------------------------
+
+
+* parallelmode
+* ------------------------------------
+* In this context, deterministic means that multiple runs with the same model at the same parameter settings
+* on the same platform will reproduce the same solution path and results. In contrast, opportunistic implies
+* that even slight differences in timing among threads or in the order in which tasks are executed in different
+* threads may produce a different solution path and consequently different timings or different solution vectors
+* during optimization executed in parallel threads. When running with multiple threads, the opportunistic setting
+* entails less synchronization between threads and consequently may provide better performance.
+* - n=0: Cplex uses maximum number of threads (determined by the computing platform) in deterministic mode unless ParallelMode is set to -1 (opportunistic).
+* - n=1: Cplex runs sequential.
+* - n>1: Cplex uses maximum number of threads (determined by the computing platform) in opportunistic mode unless ParallelMode is set to 1 (deterministic).
+*
+* TIP: Opportunistic mode might help if cplex gets stuck when removing perturbation!
+
+
+* polishtime 
+* ------------------------------------
+* Info by GAMS: Useful if polishing really finds better solutions.
+* ------------------------------------
+
+
+* quality 1
+* ------------------------------------
+* Kappa is calculated if solver terminates within the time limit (tilim).
+* ------------------------------------
+
+* scaind 
+* ------------------------------------
+* Info by GAMS: Aggressive scaling can be beneficial for some models.
+* ------------------------------------
+
+* solutiontype
+* ------------------------------------
+* turns off crossover
+* - CPLEX seeks a pair of primal-dual solution vectors
+* - CPLEX does not produce status information about which variables and constraints participate in the basis
+* sufficient for LPs but not for MIPs and thus might speed up the solution process of LPs applying barrier algorithm
+* ------------------------------------
+
+* tilim
+* ------------------------------------
+* given in seconds (wall clock time) and therefore might depend on server load
+* dettilim does not depend on server load but tick may vary by platform 
+* (--> Dettilim has to be determined individually for each server!)
+* ------------------------------------
+
+
+* threads 
+* ------------------------------------
+* MIP-runs: Each thread is used to explore a different branch / node.  
+*           --> useful for difficult to solve models such as "DE" or "IT"
+* LP-runs:  Different algorithms, e.g. barrier and simplex, are used to solve the same problem individually. The solution is returned by first method to finish. 
+*           Only the barrier algorithm supports real parallelization!
+*			--> beneficial when barrier solves often
+*           (see "lpmethod")
+* ------------------------------------
+
+
+
+
+
+
+
+
+
+
+

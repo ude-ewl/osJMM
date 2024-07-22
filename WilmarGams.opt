@@ -1,0 +1,77 @@
+* File WilmarGams.opt to the Wilmar model.
+* This file contains GAMS options.
+
+
+*------------------------------------------------------------------------------
+* The following are options applying to the GAMS system (unless overwritten).
+* Observe that in order to make them apply everywhere,
+* the option $ONGLOBAL must be set in the WilmarX_xx.gms file
+* before the $inclusion of the present file.
+*------------------------------------------------------------------------------
+
+
+
+* Global execution profiling option (integer value gives profiling depth)
+$ifi %debug% == YES option PROFILE = 12;
+
+* Profile time tolerance
+$ifi %debug% == YES option PROFILETOL = 0.1;
+
+* $OFFLISTING suppresses listing of input in the list file.
+* The listing is convenient for instance if there are errors,
+* e.g. because the errors will be specifed by the line numbers in the list file.
+* However, the file produced will be quite large.
+* $OFFLISTING or $ONLISTING (default):
+* $OFFLISTING
+
+
+
+* SYMXREF SYMLIST UELLIST UELXREF, with the prefixes ON or OFF
+* control cross references (XREF) and list (LIST) of symbols (SYM) or unique elements (UEL)
+* in the list file. Useful for inspection of details and overview:
+*$OFFSYMXREF OFFSYMLIST OFFUELLIST OFFUELXREF
+*$ONSYMXREF ONSYMLIST ONUELLIST ONUELXREF
+*$ONSYMXREF ONSYMLIST
+
+* ONINLINE makes it possible to comment out parts using /*  */. MUST be present:
+$ONINLINE
+
+* LIMROW and LIMCOL specifies the maximum number of rows and columns
+* used in equations listing and inspection of details.
+* Defaults are LIMROW=3, LIMCOL=3;
+* The statement "LIMROW=0" turns the listing off:
+*
+OPTIONS LIMROW=0, LIMCOL=0;
+
+* ITERLIM specifies the maximum number of iteration by the solver
+* #KD: valid for every loop, not for the whole planning horizon (e.g. one year)
+OPTIONS ITERLIM=6000000;
+
+* SYSOUT controls the printing of the solved status in the list file.
+* Useful in emergency cases.
+* OPTIONS SYSOUT=OFF (default) or OPTIONS SYSOUT=ON:
+*OPTIONS SYSOUT=ON;
+
+* SOLPRINT controls the printing of the solution in the list file.
+* Useful for inspection of details.
+* OPTIONS SOLPRINT=OFF or OPTIONS SOLPRINT=ON (default):
+OPTIONS SOLPRINT=OFF;
+
+option decimals=4;
+
+* --- Parallelization
+* threads=n (use n cores), threads=0 (use all available cores), threads=-n (use all but n cores)
+* option threads=-1;
+
+* Save solver point GDX file that contains information on the current solution
+* 0 nothing is saved (default), 1 from last solve is saved, 2 from every solve is saved
+* OPTION Savepoint=2;
+
+* Maximum time in seconds that the computer can run during execution of a solver before the solver terminates the run (default = 1000)
+OPTION RESLIM= 10000000;
+
+* Relative option tolerance
+*option OPTCR= 0;
+*option OPTCR= 0.05;
+option OPTCR= 0.001;
+*option OPTCR= 0.01;
